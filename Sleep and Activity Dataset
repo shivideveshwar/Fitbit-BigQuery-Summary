@@ -1,0 +1,19 @@
+SELECT
+	Activity.Id,
+  ActivityDay,                          
+	ROUND(AVG(CAST(TotalMinutesAsleep AS INT64)/60),2) AS Average_sleep_hours,
+  ROUND(AVG(CAST(TotalTimeInBed AS INT64)/60),2) AS Average_time_in_bed_hours,
+  ROUND(AVG(CAST(Calories AS INT64)),1) AS Average_calories,
+  ROUND(AVG(CAST(StepTotal AS INT64)),1) AS Average_steps,
+  SUM(SedentaryActiveDistance + LightActiveDistance +	ModeratelyActiveDistance + VeryActiveDistance) AS TotalDistance
+FROM 
+	`my-project1-346506.fitbase.Sleep` AS sleep
+  INNER JOIN
+  `my-project1-346506.fitbase.Daily Activity` AS Activity
+  ON 
+  sleep.Id = Activity.Id  
+WHERE Activity.ActivityDay = sleep.SleepDay 
+GROUP BY
+	Activity.Id, ActivityDay
+ORDER BY
+Activity.Id, ActivityDay
