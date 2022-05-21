@@ -1,0 +1,11 @@
+SELECT
+	DISTINCT Id,
+  ActivityDay,
+  SUM(SedentaryActiveDistance + LightActiveDistance +	ModeratelyActiveDistance + VeryActiveDistance) AS TotalDistance,
+  ROUND(SUM(LightlyActiveMinutes +	FairlyActiveMinutes + VeryActiveMinutes)/60, 2)AS TotalActiveHours,
+  ROUND(SUM(SedentaryMinutes)/60, 2) AS SedentaryHours
+FROM 
+	`my-project1-346506.fitbase.Daily Activity` AS Activity
+
+GROUP BY
+Id, ActivityDay
